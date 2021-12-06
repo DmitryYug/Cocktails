@@ -1,6 +1,6 @@
 import React from "react";
 
-const CardButtons = () => {
+const CardButtons = ({method}) => {
         return(
             <>
                 <button 
@@ -9,6 +9,7 @@ const CardButtons = () => {
                         \/
                 </button>
                 <button 
+                    onClick={method}
                     type="button" 
                     className="btn btn-danger ">
                         ?
