@@ -68,7 +68,7 @@ export default class AddForm extends Component {
                 /> 
                 <Input 
                     // onChange={this.onChange}
-                    placeholder="Reciepe" 
+                    placeholder="Recipe" 
                     // value={this.state.newCocktailName}
                 /> 
                 <Input 

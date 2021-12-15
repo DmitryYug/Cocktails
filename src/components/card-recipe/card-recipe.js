@@ -1,12 +1,21 @@
 import React from "react";
 
-const CardRecipe = () => {
-    return (
-        <div>
-            Here will be recipe
-        </div>
+const Recipe = ({ingredients, measures}) => {
+    let recipe = ''
+    ingredients.forEach((item, i) => {
+        if(item !== null && item !== '' && measures[i] !== null) {
+            recipe += `${item}: ${measures[i]}, `
+        } else if (item != null && measures[i] == null) {
+            recipe += `${item}, `
+        } 
+    })
+    return(
+        <p>
+            {recipe}
+        </p>
     )
-};
 
+}
 
-export default CardRecipe
+export default Recipe
+

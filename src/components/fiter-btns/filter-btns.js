@@ -6,9 +6,10 @@ export default class FilterBtns extends Component {
     constructor(props) {
         super(props)
         this.buttons = [
-            {name: 'all', label: 'All cocktails'},
-            {name: 'know', label: 'Already know'},
-            {name: 'learn', label: 'Need to learn'},
+            {name: '10Random', label: '10 Random'},
+            {name: 'a', label: 'A'},
+            {name: 'b', label: 'B'},
+            {name: 'c', label: 'C'},
             {name: 'random', label: 'Random'}
         ]
         this.onFilterUpdate = this.onFilterUpdate.bind(this)

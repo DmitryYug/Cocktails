@@ -1,2 +1,2 @@
-import CardRecipe from "./card-recipe";
-export default CardRecipe;
+import Recipe from "./card-recipe";
+export default Recipe

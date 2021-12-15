@@ -1,22 +1,17 @@
 import React, { Component } from "react";
-import AddForm from "../add-form";
-// import CocktailCard from "../cocktail-card";
+// import AddForm from "../add-form";
 import CocktailCardList from "../cocktail-card-list";
 import SearchPanel from "../search-panel";
 import FilterBtns from "../fiter-btns";
+import cocktService from "../../servicies/service";
 
 export default class App extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            description: [
-                {learn: false, know: false, method: 'Stir', glass: 'old fashioned glass', garnish: 'Orange peel+cherry',name: 'old fashioned', id: 1},
-                {learn: false, know: false, method: 'Shake', glass: 'Cocktail glass', garnish: 'Lime aromatic', name: 'Daiquiry', id: 2 },
-                {learn: false, know: false, method: 'Stir', glass: 'old fashioned glass', garnish: 'Orange slice', name: 'Negroni', id: 3},
-                {learn: false, know: false, method: 'Shake', glass: 'Cocktail glass', garnish: '-', name: 'Last word', id: 4}
-            ],
+            allCockts: [],
             term: '',
-            filter:'all'
+            filter:'10Random'
         };
         this.onToggleKnow = this.onToggleKnow.bind(this);
         this.onToggleLearn = this.onToggleLearn.bind(this);
@@ -25,9 +20,20 @@ export default class App extends Component {
         this.onUpdateSearch = this.onUpdateSearch.bind(this);
         this.onFilterUpdate = this.onFilterUpdate.bind(this);
         this.maxId = 5;
-
+        this.getAllCocktailsList()
+    }
+    
+    cocktService = new cocktService();
+    
+    cocktailListLoaded = (allCockts) => {
+        this.setState({allCockts})
     }
 
+    async getAllCocktailsList() {
+        await this.cocktService.getAllCocktails()
+            .then(this.cocktailListLoaded)
+    }
+    
     onSearch(items, term) {
         if (term.length === 0) {
             return items
@@ -36,7 +42,6 @@ export default class App extends Component {
             return element.name.indexOf(term) > -1;
         });
     }
-
     onUpdateSearch(term) {
         this.setState({term})
     }
@@ -49,41 +54,38 @@ export default class App extends Component {
             garnish: garnish,
             id: this.maxId++
         }
-
-        this.setState(({description}) =>{
-            let newArr = [...description, newCocktail]
+        this.setState(({allCockts}) =>{
+            let newArr = [...allCockts, newCocktail]
             return{
-                description: newArr
+                allCockts: newArr
             }
         })
     }
 
     onToggleLearn(id) {
-        this.setState(({description}) => {
-            const index = description.findIndex(elem => elem.id === id);
-            const oldItem = description[index]
+        this.setState(({allCockts}) => {
+            const index = allCockts.findIndex(elem => elem.id === id);
+            const oldItem = allCockts[index]
             const newItem = {...oldItem, learn: !oldItem.learn, know: false }
-			const newArr = [...description.slice(0, index), newItem, ...description.slice(index + 1)];
+			const newArr = [...allCockts.slice(0, index), newItem, ...allCockts.slice(index + 1)];
             console.log(newArr)
             return {
-                description: newArr
+                allCocktss: newArr
             }
         })
     }
 
     onToggleKnow(id) {
-        this.setState(({description}) => {
-            const index = description.findIndex(elem => elem.id === id);
-            const oldItem = description[index]
+        this.setState(({allCockts}) => {
+            const index = allCockts.findIndex(elem => elem.id === id);
+            const oldItem = allCockts[index]
             const newItem = {...oldItem, know: !oldItem.know, learn: false }
-			const newArr = [...description.slice(0, index), newItem, ...description.slice(index + 1)];
-            console.log(newArr)
+			const newArr = [...allCockts.slice(0, index), newItem, ...allCockts.slice(index + 1)];
             return {
-                description: newArr
+                allCockts: newArr
             }
         })
     }
-    
 
     onFilter(items, filter) {
         if(filter === 'know') {
@@ -99,10 +101,9 @@ export default class App extends Component {
         this.setState({filter})
     }
 
-
     render () {
-        const {description, term, filter} = this.state;
-        const visibleCards = this.onFilter(this.onSearch(description, term), filter)
+        const {allCockts, term, filter} = this.state;
+        const visibleCards = this.onFilter(this.onSearch(allCockts, term), filter)
         return (
             <div className="app">
                 <div className="search-panel">
@@ -113,10 +114,10 @@ export default class App extends Component {
                         onUpdateSearch={this.onUpdateSearch}
                     />
                 </div>
-                    <AddForm
-                        addCocktail={this.addCocktail}/>
+                    {/* <AddForm
+                        addCocktail={this.addCocktail}/> */}
                     <CocktailCardList 
-                        header={visibleCards}
+                        cardContent={visibleCards}
                         onToggleLearn={this.onToggleLearn}
                         onToggleKnow={this.onToggleKnow}
                     />

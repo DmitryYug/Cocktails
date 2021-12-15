@@ -1,26 +1,40 @@
 import React from "react";
 import CocktailCard from "../cocktail-card";
+import {Col, Row, Container} from 'reactstrap'; 
 
-const CocktailCardList = ({header, onToggleLearn, onToggleKnow}) => {
-    const elements = header.map((descrObj) => {
-        const {id, learn, know, ...cardContent} = descrObj;
+
+const CocktailCardList = ({cardContent, onToggleLearn, onToggleKnow}) => {
+    const elements = cardContent.map((list) => {
+        const {id, learn, know, ingredients, measures, ...cockt} = list;
         return(
-                <li key={id}> 
+                <Col 
+                md='6'
+                key={id}>
                     <CocktailCard 
-                    {...cardContent}
+                    {...cockt}
+                    ingredients={ingredients}
+                    measures={measures}
                     learn={learn}
                     know={know}
                     onToggleKnow={() => onToggleKnow(id)}
                     onToggleLearn={() => onToggleLearn(id)}
                     />
-                </li>
+                </Col>
         );
     });
+    
     return (
-        <ul>
-            {elements}
-        </ul>
+        <Container>
+            <Row>
+                {elements}
+            </Row>
+        </Container>
     );
 };
 
 export default CocktailCardList
+
+
+
+
+
