@@ -18,9 +18,6 @@ export default class App extends Component {
         this.onSearch = this.onSearch.bind(this);
         this.onUpdateSearch = this.onUpdateSearch.bind(this);
         this.onFilterUpdate = this.onFilterUpdate.bind(this);
-        // this.onFilter = this.onFilter.bind(this)
-        // this.getCocktailsByLetter = this.onFilter.bind(this)
-        // this.maxId = 5;
         this.btnFilter(this.state.filter)
         this.btnFilter = this.btnFilter.bind(this)
     }
@@ -34,7 +31,6 @@ export default class App extends Component {
     async setCocktailsByLetter(filter) {
         await this.cocktService.getCocktailsByLetter(filter)
             .then(this.cocktailListLoaded)
-            // .catch(console.log('null'))
     }
     
     async setRandomCocktail() {
@@ -50,15 +46,11 @@ export default class App extends Component {
         }
     }
 
-
     async setSearch(term) {
         await this.cocktService.getSearchByName(term)
             .then(this.cocktailListLoaded)
     }
 
-    
-
-    //working
     onSearch(items, term) {
         if (term.length === 0) {
             return items
@@ -97,11 +89,7 @@ export default class App extends Component {
     render () {
         const {allCockts, term, filter} = this.state;
 
-        // const visibleCards = this.onFilter(this.onSearch(allCockts, term), filter)
         const visibleCards = this.onSearch(allCockts, term)
-        // console.log(visibleCards)
-        // console.log(allCockts)
-        // console.log(filter)
         return (
             <div className="app">
                 <div className="search-panel">

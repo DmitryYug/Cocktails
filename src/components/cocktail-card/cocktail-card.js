@@ -26,27 +26,7 @@ export default class CocktailCard extends Component {
 
     render () {
         const {method, glass, name} = this.props
-        
         const {ingredients, measures} = this.props
-
-        
-
-            //working code
-        // return (
-        //     <div className="card mb-3">
-        //         <h4 className="card-title">
-        //             {name}
-        //         </h4>
-        //         <div>
-        //             <Recipe
-        //                 ingredients={ingredients}
-        //                 measures={measures}/>
-        //            <p>{method}</p>
-        //            <p>Serve in {glass}</p> 
-        //         </div>
-        //     </div>
-        // );
-    
         const card = this.state.toggle ? <CardBody method={method} glass={glass} ingredients={ingredients} measures={measures}  /> : null
 
         return(

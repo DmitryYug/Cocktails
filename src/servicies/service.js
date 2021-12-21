@@ -20,8 +20,15 @@ export default class cocktService extends Component {
     async getCocktailsByLetter(filter) {
         const res = await this.getResource(`json/v2/9973533/search.php?f=${filter}`)
         const {drinks} = res
-        // const errorMessage = [{name: 'ooops, no cocktail on this letter'}]
-        return drinks.map(this._transformCocktailData)
+        console.log(drinks);
+        const errorMessage = [{name: 'ooops, no cocktail on this letter'}]
+        if(drinks === null) {
+            console.log('ok');
+            return errorMessage
+        } else {
+
+            return drinks.map(this._transformCocktailData)
+        }
     }
 
     async getSearchByName(name) {
